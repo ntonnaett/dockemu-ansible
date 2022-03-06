@@ -22,7 +22,7 @@
      - name: Install list of packages
        become: yes
        dnf:
-           name: ['podman-docker', 'ca-certificates', 'curl', 'python3-docker', 'NetworkManager-libnm-devel', 'python3-gobject']
+           name: ['ca-certificates', 'curl', 'docker', 'NetworkManager-libnm-devel', 'python3-gobject']
            state: present
            update_cache: yes
 

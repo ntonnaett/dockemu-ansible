@@ -18,13 +18,13 @@
        copy: "src=files/server/Dockerfile dest={{ deployFolder }}/server/" 
 
      - name: Build client image and leave it in internal repository
-       docker_image:
+       community.docker.docker_image:
            path: "{{ deployFolder }}/client"
            name: "{{ baseContainerName }}_client"
            rm: yes
 
      - name: Build server image and leave it in internal repository    
-       docker_image:
+       community.docker.docker_image:
            path: "{{ deployFolder }}/server"
            name: "{{ baseContainerName }}_server"
            rm: yes
