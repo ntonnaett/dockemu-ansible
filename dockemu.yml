@@ -1,7 +1,6 @@
 ---
 - name: Install Dockemu dependencies and required packages
   hosts: dockemu
-  become: true
   tags:
       - install
   roles:
@@ -9,7 +8,6 @@
 
 - name: Install Dockemu dependencies and required packages
   hosts: dockemu
-  become: true
   tags:
       - install_fedora
   roles:
@@ -17,7 +15,6 @@
 
 - name: Prepare Docker containers and set ns-3 configuration
   hosts: dockemu
-  become: true
   tags:
       - prepare
   roles:
@@ -25,7 +22,6 @@
      
 - name: Execute Dockemu simulation
   hosts: dockemu
-  become: true
   tags:
      - execute
   roles:
