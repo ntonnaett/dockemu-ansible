@@ -19,15 +19,17 @@
 
      - name: Build client image and leave it in internal repository
        community.docker.docker_image:
+         build:
            path: "{{ deployFolder }}/client"
-           name: "{{ baseContainerName }}_client"
-           rm: yes
+         name: "{{ baseContainerName }}_client"
+         source: build
 
      - name: Build server image and leave it in internal repository    
        community.docker.docker_image:
+         build:
            path: "{{ deployFolder }}/server"
-           name: "{{ baseContainerName }}_server"
-           rm: yes
+         name: "{{ baseContainerName }}_server"
+         source: build
 
      #CREATE LOG FOLDERS
      - name: Creates log folders for each client node
