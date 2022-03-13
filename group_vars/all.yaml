@@ -1,7 +1,7 @@
 ---
      # deployment setup    
-    nsVersion: ns-allinone-3.29
-    nsCodeFolder: ns-3.29
+    nsVersion: ns-allinone-3.35
+    nsCodeFolder: ns-3.35
     extension: .tar.bz2
     deployFolder: /home/dockemu/src/dockemu
     optimized: false
