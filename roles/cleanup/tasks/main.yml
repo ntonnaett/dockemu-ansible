@@ -36,7 +36,6 @@
 
 # STOP NS3
      - name: Stop NS3 simulator 
-       become: yes
        systemd:
                state: stopped
                name: ns3  
