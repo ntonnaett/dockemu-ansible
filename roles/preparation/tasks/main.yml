@@ -10,13 +10,15 @@
          build:
            path: "{{ deployFolder }}/client"
          name: "{{ baseContainerName }}_client"
+         force_source: yes
          source: build
 
-     - name: Build server image and leave it in internal repository    
+     - name: Build server image and leave it in internal repository
        community.docker.docker_image:
          build:
            path: "{{ deployFolder }}/server"
          name: "{{ baseContainerName }}_server"
+         force_source: yes
          source: build
 
      #CREATE LOG FOLDERS
