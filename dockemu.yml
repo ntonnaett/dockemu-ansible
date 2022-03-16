@@ -23,7 +23,7 @@
 - name: Execute Dockemu simulation
   hosts: dockemu
   tags:
-     - execute
+      - execute
   roles:
       - execution
 
@@ -31,7 +31,7 @@
   hosts: dockemu
   become: true
   tags:
-     - cleanup
+      - cleanup
   roles:
       - cleanup
      
