@@ -148,6 +148,7 @@
            src: "/proc/{{ item }}/ns/net"
            dest: "/var/run/netns/{{ item }}"
            state: link
+           follow: false
        become: yes    
        with_items:
              - "{{list_client_container_pids.results|map(attribute='stdout')|list}}"
