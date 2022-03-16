@@ -9,8 +9,8 @@
       # experiment configuration
       # base container name should not contain non-alfanumeric chars 
       # max 8 chars 
-    baseContainerName: coapcont
-    experimentName: coap-experiment
+    baseContainerName: jacktrip
+    experimentName: jacktrip-experiment
     logsDirectory: /var/dockemu/logs/
     numberOfClientNodes: 5 
     numberOfServerNodes: 1

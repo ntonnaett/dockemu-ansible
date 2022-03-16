@@ -12,10 +12,9 @@
 
  # COPY Dockerfiles AND BUILD IMAGES
      - name: Copy Dockerfile for client nodes  
-       copy: "src=files/{{ baseContainerName }}/client/Dockerfile dest={{ deployFolder }}/client/"
-     
+       copy: "src=files/{{ baseContainerName }}/client/ dest={{ deployFolder }}/client/"
      - name: Copy Dockerfile for server nodes
-       copy: "src=files/{{ baseContainerName }}/server/Dockerfile dest={{ deployFolder }}/server/"
+       copy: "src=files/{{ baseContainerName }}/server/ dest={{ deployFolder }}/server/"
 
      - name: Build client image and leave it in internal repository
        community.docker.docker_image:
