@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 [Service]
 WorkingDirectory={{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}
 Type=simple
-User=dockemu
+User=root
 ExecStart={{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}/launch_ns3.sh
 
 [Install]
