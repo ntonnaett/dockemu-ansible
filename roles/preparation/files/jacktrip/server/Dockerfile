@@ -11,7 +11,7 @@ ENV JACKTRIP_TAR=https://github.com/jacktrip/jacktrip/archive/refs/tags/v${JACKT
 
 # Install dependencies
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential ca-certificates locales vim git wget net-tools \
+    && apt-get install -y --no-install-recommends build-essential ca-certificates locales vim git wget net-tools iputils-ping \
                                                   jackd2 alsa-utils libjack-jackd2-dev qtbase5-dev libqt5network5 mpg123 ecasound \
                                                   python3-pip python3-setuptools \
     && locale-gen en_US.UTF-8 \
