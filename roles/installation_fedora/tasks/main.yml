@@ -35,7 +35,8 @@
        become: yes
        user:
            name: dockemu
-           group: docker
+           group: dockemu
+           groups: ['docker','wheel','realtime']
 
      - name: Creates directory
        file:
