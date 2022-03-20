@@ -63,10 +63,10 @@
        with_sequence: "start=0 count={{ numberOfClientNodes }}"
 
  # REMOVE Container images
-     - name: remove client image
-       command: "docker image rm {{ baseContainerName }}_client:latest"
-       ignore_errors: yes
+     # - name: remove client image
+     #   command: "docker image rm {{ baseContainerName }}_client:latest"
+     #   ignore_errors: yes
 
-     - name: remove server image
-       command: "docker image rm {{ baseContainerName }}_server:latest"
-       ignore_errors: yes
+     # - name: remove server image
+     #   command: "docker image rm {{ baseContainerName }}_server:latest"
+     #   ignore_errors: yes
