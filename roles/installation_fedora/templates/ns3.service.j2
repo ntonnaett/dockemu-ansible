@@ -6,8 +6,5 @@ StartLimitIntervalSec=0
 [Service]
 WorkingDirectory={{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}
 Type=simple
-User=root
 ExecStart={{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}/launch_ns3.sh
 
-[Install]
-WantedBy=multi-user.target

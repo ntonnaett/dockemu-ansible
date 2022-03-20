@@ -81,4 +81,12 @@
        template:
            src: templates/ns3.service.j2
            dest: /usr/lib/systemd/system/ns3.service
-           mode: 0755 
+           mode: 0755
+     - name: set SELinux permissions on ts3server binaries
+       become: yes
+       sefcontext:
+         target: "{{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}/launch_ns3.sh"
+         setype: bin_t
+     - name: reload SELinux policy to ensure that ts3server is executable
+       become: yes
+       command: restorecon -irv "{{ deployFolder }}"
