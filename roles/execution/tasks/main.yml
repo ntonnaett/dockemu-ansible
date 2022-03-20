@@ -357,4 +357,20 @@
        systemd:
                state: started
                daemon_reload: yes
-               name: ns3  
+               name: ns3
+     - name: Run command on server nodes
+       community.docker.docker_container_exec:
+         container: "{{ baseContainerName }}-server-{{ item }}"
+         argv:
+           - /bin/bash
+           - "-c"
+           - "{{ serverCommand }}"
+       with_sequence: "start=0 count={{ numberOfServerNodes }}"
+     - name: Run command on client nodes
+       community.docker.docker_container_exec:
+         container: "{{ baseContainerName }}-client-{{ item }}"
+         argv:
+           - /bin/bash
+           - "-c"
+           - "{{ clientCommand }}"
+       with_sequence: "start=0 count={{ numberOfClientNodes }}"

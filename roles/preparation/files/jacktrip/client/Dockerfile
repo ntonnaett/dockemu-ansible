@@ -34,4 +34,4 @@ RUN chmod +x /sbin/entrypoint.sh
 EXPOSE 4464
 EXPOSE 61002-61100/udp
 
-CMD entrypoint.sh > /var/log/dockemu/jacktrip-client.log
+CMD entrypoint.sh > /var/log/dockemu/jacktrip-docker.log
