@@ -168,6 +168,7 @@ main (int argc, char *argv[])
   //
   // Run the simulation for TotalTime seconds to give the user time to play around
   //
+  csma.EnablePcapAll("tap-csma", false);
   NS_LOG_UNCOND ("Running simulation in csma mode");
   Simulator::Stop (Seconds (TotalTime));
   Simulator::Run ();
