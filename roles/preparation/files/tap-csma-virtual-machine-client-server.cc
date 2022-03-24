@@ -60,6 +60,7 @@
 //
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
@@ -76,15 +77,19 @@ int
 main (int argc, char *argv[])
 {
   bool AnimationOn = false;
+  bool TracingPcap = false;
   int NumClientNodes = 5;
   int NumServerNodes = 1;
   double TotalTime = 600.0;
+  std::string tracefilePath = "/var/log/dockemu";
 
   CommandLine cmd;
   cmd.AddValue ("NumClientNodes", "Number of client nodes/devices", NumClientNodes);
   cmd.AddValue ("NumServerNodes", "Number of server nodes/devices", NumServerNodes);
   cmd.AddValue ("TotalTime", "Total simulation time", TotalTime);
   cmd.AddValue ("AnimationOn", "Enable animation", AnimationOn);
+  cmd.AddValue ("TracingPcap", "Enable PCAP tracing", TracingPcap);
+  cmd.AddValue ("TracefilePath", "Path to store tracing and PCAP files", tracefilePath);
 
   cmd.Parse (argc,argv);
 
@@ -147,6 +152,17 @@ main (int argc, char *argv[])
         tapBridge.Install (nodes.Get (i + NumClientNodes), devices.Get (i + NumClientNodes));
     }
 
+  if (TracingPcap)
+    {
+        for (int i = 0; i < NumClientNodes; i++)
+          {
+              csma.EnablePcap(tracefilePath + "/ns3_tap_client_" + std::to_string(i), devices.Get(i), false, true);
+          }
+        for (int i = 0; i <  NumServerNodes; i++)
+          {
+              csma.EnablePcap(tracefilePath + "/ns3_tap_server_" + std::to_string(i), devices.Get(i + NumClientNodes), false, true);
+          }
+    }
   // if( AnimationOn )
   // {
   //   NS_LOG_UNCOND ("Activating Animation");
@@ -168,7 +184,6 @@ main (int argc, char *argv[])
   //
   // Run the simulation for TotalTime seconds to give the user time to play around
   //
-  csma.EnablePcapAll("tap-csma", false);
   NS_LOG_UNCOND ("Running simulation in csma mode");
   Simulator::Stop (Seconds (TotalTime));
   Simulator::Run ();

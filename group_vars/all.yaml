@@ -14,6 +14,7 @@
     serverCommand: jacktrip -S -z -p4 -I 1 -G /var/log/dockemu/jacktrip-io.log > /var/log/dockemu/jacktrip-server.log &
     clientCommand: jacktrip -C 10.12.0.240 -z -x 1 -I 1 -G /var/log/dockemu/jacktrip-io.log > /var/log/dockemu/jacktrip-client.log &
     logsDirectory: /var/dockemu/logs/
+    tracefilePath: "{{ deployFolder }}/{{ experimentName }}/traces"
     numberOfClientNodes: 5
     numberOfServerNodes: 1
     serverNode: True

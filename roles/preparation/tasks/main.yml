@@ -45,7 +45,12 @@
            state: directory
        with_sequence: "start=0 count={{ numberOfServerNodes }}"
     
-    
+    #CREATE TRACE FOLDER
+     - name: Create trace folder
+       file:
+            path: "{{ deployFolder }}/{{ experimentName }}/traces"
+            state: directory
+
        # NS3 CONF AND COMPILATION
      - name: Copy NS3 configuration file
        copy: "src=files/{{ ns3NetworkScript }}.cc dest={{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}/scratch"
