@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 as builder
 
 ENV DEBIAN_FRONTEND=noninteractive \
     TMPDIR=/tmp \
@@ -36,8 +36,13 @@ RUN export ARCH=`dpkg --print-architecture` \
     && ninja \
     && ninja install
 
+FROM ubuntu:20.04 as runner
+COPY --from=builder /usr/local/bin/jacktrip /usr/local/bin/jacktrip
 COPY entrypoint.sh /sbin/entrypoint.sh
-RUN chmod +x /sbin/entrypoint.sh
+RUN chmod +x /sbin/entrypoint.sh \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends jackd2 libjack-jackd2-0 libqt5network5 libqt5core5a
+
 
 EXPOSE 4464
 EXPOSE 61002-61100/udp
