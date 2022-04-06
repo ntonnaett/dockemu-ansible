@@ -64,10 +64,12 @@
 
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
+#include "ns3/internet-module.h"
 #include "ns3/csma-module.h"
 #include "ns3/tap-bridge-module.h"
 
- #include "ns3/netanim-module.h"
+#include "ns3/netanim-module.h"
+#include "ns3/flow-monitor-module.h"
 
 using namespace ns3;
 
@@ -78,6 +80,8 @@ main (int argc, char *argv[])
 {
   bool AnimationOn = false;
   bool TracingPcap = false;
+  bool TracingAscii = true;
+  // bool FlowMonitorOn = true;
   int NumClientNodes = 5;
   int NumServerNodes = 1;
   double TotalTime = 600.0;
@@ -89,6 +93,7 @@ main (int argc, char *argv[])
   cmd.AddValue ("TotalTime", "Total simulation time", TotalTime);
   cmd.AddValue ("AnimationOn", "Enable animation", AnimationOn);
   cmd.AddValue ("TracingPcap", "Enable PCAP tracing", TracingPcap);
+  cmd.AddValue ("TracingAscii", "Enable ASCII tracing", TracingAscii);
   cmd.AddValue ("TracefilePath", "Path to store tracing and PCAP files", tracefilePath);
 
   cmd.Parse (argc,argv);
@@ -111,7 +116,6 @@ main (int argc, char *argv[])
   NodeContainer nodes;
   nodes.Create (NumClientNodes + NumServerNodes);
 
-  //
   // Use a CsmaHelper to get a CSMA channel created, and the needed net 
   // devices installed on both of the nodes.  The data rate and delay for the
   // channel can be set through the command-line parser.  For example,
@@ -140,6 +144,9 @@ main (int argc, char *argv[])
 
         tapBridge.SetAttribute ("DeviceName", StringValue (tapName.str ()));
         tapBridge.Install (nodes.Get (i), devices.Get (i));
+
+        // Names::Add("client_" + std::to_string(i), nodes.Get (i));
+        // Names::Add("client_" + std::to_string(i) + "_eth0", devices.Get (i));
     }
 
   for (int i = 0; i <  NumServerNodes; i++)
@@ -150,6 +157,9 @@ main (int argc, char *argv[])
 
         tapBridge.SetAttribute ("DeviceName", StringValue (tapName.str ()));
         tapBridge.Install (nodes.Get (i + NumClientNodes), devices.Get (i + NumClientNodes));
+
+        // Names::Add("server_" + std::to_string(i), nodes.Get (i + NumClientNodes));
+        // Names::Add("server_" + std::to_string(i) + "_eth0", devices.Get (i + NumClientNodes));
     }
 
   if (TracingPcap)
@@ -163,6 +173,22 @@ main (int argc, char *argv[])
               csma.EnablePcap(tracefilePath + "/ns3_tap_server_" + std::to_string(i), devices.Get(i + NumClientNodes), false, true);
           }
     }
+
+  if (TracingAscii)
+    {
+        for (int i = 0; i < NumClientNodes; i++)
+          {
+              csma.EnableAscii(tracefilePath + "client_" + std::to_string(i), devices.Get(i));
+          }
+        for (int i = 0; i <  NumServerNodes; i++)
+          {
+              csma.EnableAscii(tracefilePath + "server_" + std::to_string(i), devices.Get(i + NumClientNodes));
+          }
+    }
+
+  // FlowMonitorHelper flowHelper;
+  // Ptr<FlowMonitor> flowMonitor = flowHelper.Install(nodes);
+  // FlowMonitor->SerializeToXmlFile(tracefilePath + "/flowmonitor.xml", false, true);
   // if( AnimationOn )
   // {
   //   NS_LOG_UNCOND ("Activating Animation");
