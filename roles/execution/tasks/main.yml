@@ -13,6 +13,7 @@
             volumes:
                  - "{{ deployFolder }}/{{ experimentName }}/logs/{{ baseContainerName }}-server-{{ item }}:/var/log/dockemu"
             privileged: yes
+            oom_killer: no
             capabilities:
               - SYS_NICE
             shm_size: 256M
@@ -36,6 +37,7 @@
             volumes:
                  - "{{ deployFolder }}/{{ experimentName }}/logs/{{ baseContainerName }}-{{ item }}:/var/log/dockemu"
             privileged: yes
+            oom_killer: no
             capabilities:
               - SYS_NICE
             shm_size: 256M
