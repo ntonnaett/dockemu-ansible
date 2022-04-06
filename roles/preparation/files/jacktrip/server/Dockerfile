@@ -2,12 +2,13 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     TMPDIR=/tmp \
-    JACKTRIP_VERSION=1.5.2
-ENV JACKTRIP_TAR=https://github.com/jacktrip/jacktrip/archive/refs/tags/v${JACKTRIP_VERSION}.tar.gz \
     TERM=linux \
     JACK_NO_AUDIO_RESERVATION=1 \
     JACK_SAMPLE_RATE=48000 \
-    JACK_PERIOD=128
+    JACK_PERIOD=512\
+#    JACKTRIP_VERSION=1.5.2
+    BRANCH=io_stats_csv
+#ENV JACKTRIP_TAR=https://github.com/jacktrip/jacktrip/archive/refs/tags/v${JACKTRIP_VERSION}.tar.gz \
 
 # Install dependencies
 RUN apt-get update \
@@ -17,12 +18,19 @@ RUN apt-get update \
     && locale-gen en_US.UTF-8 \
     && pip3 install meson ninja pyyaml jinja2
 
+# Download tar.gz
+# RUN wget --progress=bar:force:noscroll -O ${TMPDIR}/jacktrip.tgz ${JACKTRIP_TAR} \
+#     && tar xzvf jacktrip.tgz --strip-components=1 \
+#     && rm jacktrip.tgz \
+
+# Clone git repo
+RUN git clone https://github.com/jacktrip/jacktrip.git ${TMPDIR} \
+    && cd ${TMPDIR} \
+    && git switch ${BRANCH}
+
 # Install jacktrip
 RUN export ARCH=`dpkg --print-architecture` \
     && cd ${TMPDIR} \
-    && wget --progress=bar:force:noscroll -O ${TMPDIR}/jacktrip.tgz ${JACKTRIP_TAR} \
-    && tar xzvf jacktrip.tgz --strip-components=1 \
-    && rm jacktrip.tgz \
     && meson --buildtype=release -Dnogui=true builddir \
     && cd builddir \
     && ninja \
