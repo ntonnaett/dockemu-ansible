@@ -32,4 +32,4 @@
  
       # emulation parameters  
     startns3: False
-    ns3Jobs: 1
+    ns3Jobs: 12
