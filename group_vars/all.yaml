@@ -11,8 +11,11 @@
       # max 8 chars 
     baseContainerName: jacktrip
     experimentName: jacktrip-experiment
-    serverCommand: jacktrip -S -z -p4 -I 1 -G /var/log/dockemu/jacktrip-io.log > /var/log/dockemu/jacktrip-server.log &
-    clientCommand: jacktrip -C 10.12.0.240 -z -x 1 -I 1 -G /var/log/dockemu/jacktrip-io.log > /var/log/dockemu/jacktrip-client.log &
+    serverCommand: jacktrip -S -z -p4 --udprt -q auto -I 1 -G /var/log/dockemu/jacktrip-io.log > /var/log/dockemu/jacktrip-server.log &
+#    serverCommand: jacktrip -S -z -p4 --udprt -q auto > /var/log/dockemu/jacktrip-server.log &
+    serverStopCommand: killall jacktrip
+    clientCommand: jacktrip -C 10.12.0.240 -z --udprt -q auto > /var/log/dockemu/jacktrip-client.log &
+    clientStopCommand: killall jacktrip
     logsDirectory: /var/dockemu/logs/
     tracefilePath: "{{ deployFolder }}/{{ experimentName }}/traces"
     numberOfClientNodes: 5
