@@ -374,3 +374,43 @@
            - "-c"
            - "{{ clientCommand }}"
        with_sequence: "start=0 count={{ numberOfClientNodes }}"
+       async: 300
+       poll: 0
+       register: client_exec_instances
+
+     - name: Wait for client command execution
+       async_status:
+         jid: '{{ item.ansible_job_id }}'
+       register: client_jobs
+       until: client_jobs.finished
+       retries: 300
+       with_items: "{{client_exec_instances.results}}"
+
+     # Pause for
+     - name: Pause for experiment time
+       pause:
+         seconds: "{{ experimentTime }}"
+
+     # Stop containers
+     - name: stop client docker containers first
+       community.docker.docker_container:
+            name: "{{ baseContainerName }}-client-{{ item }}"
+            state: stopped
+       with_sequence: "start=0 count={{ numberOfClientNodes }}"
+       async: 300
+       poll: 0
+       register: client_container_instances
+
+     - name: Wait for client containers being stopped
+       async_status:
+         jid: '{{ item.ansible_job_id }}'
+       register: client_containers
+       until: client_containers.finished
+       retries: 300
+       with_items: "{{client_container_instances.results}}"
+
+     - name: stop server docker containers after client containers
+       community.docker.docker_container:
+            name: "{{ baseContainerName }}-server-{{ item }}"
+            state: stopped
+       with_sequence: "start=0 count={{ numberOfServerNodes }}"

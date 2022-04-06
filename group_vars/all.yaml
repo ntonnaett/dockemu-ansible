@@ -18,10 +18,11 @@
     clientStopCommand: killall jacktrip
     logsDirectory: /var/dockemu/logs/
     tracefilePath: "{{ deployFolder }}/{{ experimentName }}/traces"
-    numberOfClientNodes: 5
+    numberOfClientNodes: 20
     numberOfServerNodes: 1
     serverNode: True
-    emulationTime: 3000
+    emulationTime: 200
+    experimentTime: 160
     ns3NetworkScript: tap-csma-virtual-machine-client-server
     #ns3NetworkScript: tap-wifi-virtual-machine-client-server
     tracesEnabled: false
