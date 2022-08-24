@@ -1,2 +1,2 @@
 #!/bin/sh
-/home/dockemu/src/dockemu/{{ nsVersion }}/{{ nsCodeFolder }}/waf -j {{ ns3Jobs }} --run "scratch/{{ ns3NetworkScript }} --NumClientNodes={{ numberOfClientNodes }} --NumServerNodes={{ numberOfServerNodes }} --TotalTime={{ emulationTime }} --TracefilePath='{{ tracefilePath }}' {{ns3NetworkParameters}}"
+/home/dockemu/src/dockemu/{{ nsVersion }}/{{ nsCodeFolder }}/waf -j {{ ns3Jobs }} --run "scratch/{{ ns3NetworkScript }}" --command-template="mpiexec --allow-run-as-root --use-hwthread-cpus -np {{ ns3Jobs }} %s --NumClientNodes={{ numberOfClientNodes }} --NumServerNodes={{ numberOfServerNodes }} --TotalTime={{ emulationTime }} --TracefilePath='{{ tracefilePath }}' {{ns3NetworkParameters}}"

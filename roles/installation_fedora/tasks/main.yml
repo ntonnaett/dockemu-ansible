@@ -22,10 +22,14 @@
      - name: Install list of packages
        become: yes
        dnf:
-           name: ['ca-certificates', 'curl', 'docker', 'NetworkManager-libnm-devel', 'python3-gobject']
+           name: ['ca-certificates', 'curl', 'docker', 'NetworkManager-libnm-devel', 'python3-gobject', 'openmpi-devel']
            state: present
            update_cache: yes
 
+     - name: Load and save openmpi environment module
+       become: yes
+       command: "module load mpi/openmpi-x86_64"
+       #  module s
      - name: create docker group
        become: yes
        group:
@@ -60,13 +64,13 @@
           state: absent
 
      - name: ns3 set waf configure optimized mode
-       command: ./waf -d optimized configure
+       command: ./waf configure -d optimized --disable-examples --disable-tests --disable-python --enable-static --no-task-lines --enable-mpi
        args:
            chdir: "{{deployFolder}}/{{nsVersion}}/{{nsCodeFolder}}"
        when: optimized
 
      - name: ns3 waf configure
-       command: ./waf configure --disable-examples --disable-tests --disable-python --enable-static --no-task-lines
+       command: ./waf configure --disable-examples --disable-tests --disable-python --enable-static --no-task-lines --enable-mpi
        args:
            chdir: "{{deployFolder}}/{{nsVersion}}/{{nsCodeFolder}}"
        when: not optimized

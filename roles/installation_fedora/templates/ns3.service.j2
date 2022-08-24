@@ -6,5 +6,7 @@ StartLimitIntervalSec=0
 [Service]
 WorkingDirectory={{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}
 Type=simple
+Environment="PATH=/root/.local/bin:/root/bin:/usr/lib64/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/snapd/snap/bin:/usr/lib64/openmpi/bin"
+Environment="LD_LIBRARY_PATH=/usr/lib64/openmpi/lib"
 ExecStart={{ deployFolder }}/{{ nsVersion }}/{{ nsCodeFolder }}/launch_ns3.sh
 
