@@ -23,7 +23,7 @@
     serverNode: True
     emulationTime: 200
     experimentTime: 160
-    ns3NetworkScript: tap-csma-virtual-machine-client-server
+    ns3NetworkScript: tap-jacktrip-distributed
     #ns3NetworkScript: tap-wifi-virtual-machine-client-server
     tracesEnabled: false
     nodeSpeed: 5
