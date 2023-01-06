@@ -60,7 +60,7 @@
           state: absent
 
      - name: ns3 set waf configure optimized mode
-       command: ./waf -d optimized configure
+       command: ./waf configure -d optimized --disable-examples --disable-tests --disable-python --enable-static --no-task-lines
        args:
            chdir: "{{deployFolder}}/{{nsVersion}}/{{nsCodeFolder}}"
        when: optimized
